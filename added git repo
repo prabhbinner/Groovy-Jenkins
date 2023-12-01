@@ -1,0 +1,36 @@
+pipeline{
+
+    agent any
+    
+    stages{
+    
+        stage("Code"){
+            steps{
+                git url: "https://github.com/LondheShubham153/node-todo-cicd.git", branch: "master"
+                echo "bhaiya code clone ho gaya"
+            }
+            
+        }
+        stage("Build and Test"){
+            steps{
+                echo "code build ho gaya"
+            }
+            
+        }
+        stage("push"){
+            steps{
+                echo "code push ho gaya"
+            }
+            
+        }
+        stage("deploy"){
+            steps{
+                echo "code deploy ho gaya"
+            }
+            
+        }
+        
+    }
+    
+    
+}
