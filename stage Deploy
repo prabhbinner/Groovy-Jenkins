@@ -1,0 +1,42 @@
+pipeline{
+
+    agent any
+    
+    stages{
+    
+        stage("Code"){
+            steps{
+                git url: "https://github.com/LondheShubham153/node-todo-cicd.git", branch: "master"
+                echo "bhaiya code clone ho gaya"
+            }
+            
+        }
+        stage("Build and Test"){
+            steps{
+                sh "docker build -t node-app ."
+                echo "code build ho gaya"
+            }
+            
+        }
+        stage("push"){
+            steps{
+                withCredentials([usernamePassword:(credentialsId:"dockerHub", passwordVariable:"dockerHubPass", usernameVariable: "dockerHubUser")])
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                sh "docker tag node-app-test-new:latest ${env.dockerHubUser}/node-app-test-new:latest"
+                sh "docker push ${env.dockerHubUser}/node-app-test-new:latest"
+                echo "code push ho gaya"
+            }
+            
+        }
+        stage("deploy"){
+            steps{
+                sh "docker-compose down && docker-compose up -d"
+                echo "code deploy ho gaya"
+            }
+            
+        }
+        
+    }
+    
+    
+}
