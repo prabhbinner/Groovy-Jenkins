@@ -6,7 +6,7 @@ pipeline{
     
         stage("Code"){
             steps{
-                echo "bhaiya code clone ho gaya"
+                echo "we pull the code from github here."
             }
             
         }
